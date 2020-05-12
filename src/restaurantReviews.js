@@ -8,7 +8,7 @@ function RestaurantReviews({ city, restaurants, setReviews, reviews, match }) {
   useEffect(() => {
     console.log(match.params.id);
     fetch(
-      `https://developers.zomato.com/api/v2.1/reviews?res_id=${match.params.id}&apikey=8fa87ac61412b80b53536a2aa6e45648`
+      `https://developers.zomato.com/api/v2.1/reviews?res_id=${match.params.id}&apikey=468464703283c3777513e74e49506e21`
     )
       .then((res) => res.json())
       .then((revieww) => {
@@ -27,12 +27,10 @@ function RestaurantReviews({ city, restaurants, setReviews, reviews, match }) {
     <div className="container">
       <div className="row">
         <div className="list-group">
-          <h1 class="text-center" style={{ color: "black" }}>
-            Reviews
-          </h1>
-          {reviews.map((review) => (
-            <EachReview review={review} />
-          ))}
+          <h1 class="text-center">Reviews</h1>
+          {reviews.length > 0
+            ? reviews.map((review) => <EachReview review={review} />)
+            : "No Reviews Found"}
         </div>
       </div>
     </div>

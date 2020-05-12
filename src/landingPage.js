@@ -2,6 +2,8 @@ import React, { Fragment, useState, useEffect } from "react";
 import axios from "axios";
 import ListRestaurants from "./ListRestaurants";
 import Spinner from "./layout/spinner";
+import SearchBar from "./searchbar";
+import ShowButton from "./ShowButton";
 
 function LandingPage({
   city,
@@ -10,33 +12,39 @@ function LandingPage({
   restaurants,
   fetchRestaurants,
   changeMountStatus,
+  setFilteredRestaurants,
+  filteredRestaurants,
   setReviews,
+  loading,
+  setloading,
 }) {
   useEffect(() => {
-    setReviews([]);
-    navigator.geolocation.getCurrentPosition(function (position) {
-      console.log("Latitude is :", position.coords.latitude);
-      console.log("Longitude is :", position.coords.longitude);
+    if (initialMount === false) {
+      setReviews([]);
+      navigator.geolocation.getCurrentPosition(function (position) {
+        console.log("Latitude is :", position.coords.latitude);
+        console.log("Longitude is :", position.coords.longitude);
 
-      const url = `https://eu1.locationiq.com/v1/reverse.php?key=ad3f82c0ee7799&lat=${position.coords.latitude}&lon=${position.coords.longitude}&format=json`;
-      console.log(url);
-      axios
-        .get(url)
-        .then((res) => {
-          console.log(res.data.address.city);
-          changeMountStatus(true);
-          setCity(res.data.address.city);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    });
+        const url = `https://eu1.locationiq.com/v1/reverse.php?key=ad3f82c0ee7799&lat=${position.coords.latitude}&lon=${position.coords.longitude}&format=json`;
+        console.log(url);
+        axios
+          .get(url)
+          .then((res) => {
+            console.log(res.data.address.city);
+            changeMountStatus(true);
+            setCity("zzz");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+    }
   }, []);
 
   useEffect(() => {
     if (initialMount === true) {
       fetch(
-        `https://developers.zomato.com/api/v2.1/cities?q=${city}&apikey=8fa87ac61412b80b53536a2aa6e45648`
+        `https://developers.zomato.com/api/v2.1/cities?q=${city}&apikey=468464703283c3777513e74e49506e21`
       )
         .then((res) => res.json())
         .then((data) => {
@@ -47,6 +55,8 @@ function LandingPage({
             .then((res) => res.json())
             .then((data) => {
               fetchRestaurants(data.restaurants);
+              setFilteredRestaurants(data.restaurants);
+              setloading(false);
 
               // data.restaurants.forEach((restaurant) => {
               //   const res_id = restaurant.restaurant.id;
@@ -69,10 +79,12 @@ function LandingPage({
             })
             .catch((error) => {
               console.log(error);
+              setloading(false);
             });
         })
         .catch((error) => {
           console.log(error);
+          setloading(false);
         });
     }
   }, [city]);
@@ -81,16 +93,21 @@ function LandingPage({
     <div>
       {console.log(initialMount)}
 
-      {restaurants.length > 0 ? (
+      {loading === true ? (
+        <Spinner />
+      ) : restaurants.length > 0 ? (
         <div>
-          {" "}
+          <SearchBar
+            restaurants={restaurants}
+            setFilteredRestaurants={setFilteredRestaurants}
+          />
           <h1 class="text-center" style={{ color: "black" }}>
             Your current City is : {city}
           </h1>
-          <ListRestaurants restaurants={restaurants} />
+          <ListRestaurants restaurants={filteredRestaurants} />
         </div>
       ) : (
-        <Spinner />
+        <ShowButton setCity={setCity} />
       )}
     </div>
   );

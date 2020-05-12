@@ -8,7 +8,9 @@ function App() {
   const [city, setCity] = useState("");
   const [initialMount, changeMountStatus] = useState(false);
   const [restaurants, fetchRestaurants] = useState([]);
+  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const [loading, setloading] = useState(true);
 
   return (
     <div>
@@ -27,6 +29,10 @@ function App() {
               fetchRestaurants={fetchRestaurants}
               reviews={reviews}
               setReviews={setReviews}
+              setFilteredRestaurants={setFilteredRestaurants}
+              filteredRestaurants={filteredRestaurants}
+              loading={loading}
+              setloading={setloading}
             />
           )}
         />
