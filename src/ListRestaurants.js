@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
+// this function displays all the restaurants on main page
 class restaurants extends Component {
   render() {
     const restaurantList = this.props.restaurants.map((restaurant) => (

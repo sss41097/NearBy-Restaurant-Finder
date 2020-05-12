@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import EachReview from "./eachReview";
 import Spinner from "./layout/spinner";
 
+// this function displays all reviews
 function RestaurantReviews({ city, restaurants, setReviews, reviews, match }) {
   const [loading, changeLoading] = useState(true);
 

@@ -3,6 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
+// this the the search bar component which is displayed on main page
 const Searchbar = ({ setFilteredRestaurants, restaurants }) => {
   const [search, setInput] = useState("");
   const [restaurantList, setRestaurantList] = useState([]);

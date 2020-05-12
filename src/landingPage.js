@@ -5,6 +5,7 @@ import Spinner from "./layout/spinner";
 import SearchBar from "./searchbar";
 import ShowButton from "./ShowButton";
 
+// this is the main page of our app
 function LandingPage({
   city,
   setCity,
@@ -21,6 +22,7 @@ function LandingPage({
   useEffect(() => {
     if (initialMount === false) {
       setReviews([]);
+      // here we fetch user location
       navigator.geolocation.getCurrentPosition(function (position) {
         console.log("Latitude is :", position.coords.latitude);
         console.log("Longitude is :", position.coords.longitude);
@@ -43,6 +45,7 @@ function LandingPage({
 
   useEffect(() => {
     if (initialMount === true) {
+      //here we fetch restaurant details
       fetch(
         `https://developers.zomato.com/api/v2.1/cities?q=${city}&apikey=468464703283c3777513e74e49506e21`
       )

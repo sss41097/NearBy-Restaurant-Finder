@@ -1,5 +1,6 @@
 import React from "react";
 
+// this displays each review in a detailed manner
 const eachReview = ({ review }) => {
   console.log(review);
 

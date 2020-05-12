@@ -5,6 +5,7 @@ import RestaurantReviews from "./restaurantReviews";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 function App() {
+  // various states declared here
   const [city, setCity] = useState("");
   const [initialMount, changeMountStatus] = useState(false);
   const [restaurants, fetchRestaurants] = useState([]);
