@@ -32,7 +32,6 @@ function LandingPage({
           .then((res) => {
             console.log(res.data.address.city);
             changeMountStatus(true);
-            setCity("zzz");
           })
           .catch((error) => {
             console.log(error);
